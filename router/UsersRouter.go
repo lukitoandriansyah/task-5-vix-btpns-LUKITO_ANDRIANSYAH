@@ -24,8 +24,5 @@ func UsersRouter() {
 		usersRouter.GET("/:userId", usersInterface.Profile)
 		usersRouter.PUT("/:userId", usersInterface.Update)
 	}
-	err := router.Run()
-	if err != nil {
-		return
-	}
+	router.Run()
 }

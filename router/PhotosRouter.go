@@ -24,9 +24,5 @@ func PhotosRouter() {
 		photosRoute.GET("/photos", photosInterface.GetById)
 		photosRoute.DELETE("/:photoId", photosInterface.Delete)
 	}
-	err := router.Run()
-	if err != nil {
-		return
-	}
-
+	router.Run()
 }

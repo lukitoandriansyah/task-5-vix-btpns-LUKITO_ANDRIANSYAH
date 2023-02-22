@@ -26,7 +26,7 @@ func AuthRouter() {
 	var jwtHelperInterface = helpers.NewJwtHelperInterface()
 	var authInterface = controllers.NewAuthInterface(authHelperInterface, jwtHelperInterface)
 	router := gin.Default()
-	authRoutes := router.Group("api/users")
+	authRoutes := router.Group("/api/users")
 	{
 		authRoutes.POST("/login", authInterface.Login)
 		authRoutes.POST("/register", authInterface.Register)
