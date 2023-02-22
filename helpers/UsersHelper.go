@@ -8,16 +8,16 @@ import (
 )
 
 type UsersHelperInterface interface {
-	Update(users database.UsersUpdateData) models.Users
-	Profile(userId string) models.Users
+	Update(users database.UsersUpdateData) models.User
+	Profile(userId string) models.User
 }
 
 type UsersHelperStruct struct {
 	usersRepo models.UsersRepo
 }
 
-func (uhs *UsersHelperStruct) Update(users database.UsersUpdateData) models.Users {
-	userUpdate := models.Users{}
+func (uhs *UsersHelperStruct) Update(users database.UsersUpdateData) models.User {
+	userUpdate := models.User{}
 	err := smapping.FillStruct(&userUpdate, smapping.MapFields(&users))
 	if err != nil {
 		log.Fatalf("Failed to mapp #{err}")
@@ -26,7 +26,7 @@ func (uhs *UsersHelperStruct) Update(users database.UsersUpdateData) models.User
 	return updatedUser
 }
 
-func (uhs *UsersHelperStruct) Profile(userId string) models.Users {
+func (uhs *UsersHelperStruct) Profile(userId string) models.User {
 	return uhs.usersRepo.ProfileUser(userId)
 }
 

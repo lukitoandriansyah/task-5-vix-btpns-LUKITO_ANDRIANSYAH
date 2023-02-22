@@ -28,7 +28,7 @@ func (as AuthStruct) Login(ctx *gin.Context) {
 		return
 	}
 	authFix := as.authHelperInterface.VerifyCredential(login.Email, login.Password)
-	if value, ok := authFix.(models.Users); ok {
+	if value, ok := authFix.(models.User); ok {
 		generatedToken := as.jwtHelperInterface.GenerateToken(strconv.FormatUint(uint64(value.ID), 10))
 		value.Token = generatedToken
 		res := helpers.BuildResponse(true, "OK", value)

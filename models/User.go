@@ -7,43 +7,43 @@ import (
 	"time"
 )
 
-type Users struct {
-	ID        uint      `gorm:"primaryKey:autoIncrement" json:"id"`
-	Username  string    `gorm:"type:varchar(255)" json:"username"`
-	Email     string    `gorm:"uniqueIndex; type:varchar(255)" json:"email"`
-	Password  string    `gorm:"->'<-; not null" validate:"min=6" json:"."`
-	Token     string    `gorm:"-" json:"token,omitempty"`
-	Photos    *[]Photos `gorm:"embedded" json:"photos,omitempty"`
+type User struct {
+	ID        uint     `gorm:"primaryKey;autoIncrement" json:"id"`
+	Username  string   `gorm:"type:varchar(255)" json:"username"`
+	Email     string   `gorm:"uniqueIndex; type:varchar(255)" json:"email"`
+	Password  string   `gorm:"->'<-; not null" validate:"min=6" json:"."`
+	Token     string   `gorm:"-" json:"token,omitempty"`
+	Photos    *[]Photo `json:"photos,omitempty"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
 type UsersRepo interface {
-	InsertUser(users Users) Users
-	UpdateUser(users Users) Users
+	InsertUser(users User) User
+	UpdateUser(users User) User
 	VerifyCredential(email string, password string) interface{}
 	IsDuplicateEmail(email string) (ab *gorm.DB)
-	FindByEmail(email string) Users
-	GetUser(users Users) Users
-	DeleteUser(users Users) Users
-	ProfileUser(userId string) Users
+	FindByEmail(email string) User
+	GetUser(users User) User
+	DeleteUser(users User) User
+	ProfileUser(userId string) User
 }
 
 type userConnection struct {
 	connection *gorm.DB
 }
 
-func (uc userConnection) InsertUser(users Users) Users {
+func (uc userConnection) InsertUser(users User) User {
 	users.Password = hashAndSalt([]byte(users.Password))
 	uc.connection.Save(&users)
 	return users
 }
 
-func (uc userConnection) UpdateUser(users Users) Users {
+func (uc userConnection) UpdateUser(users User) User {
 	if users.Password != "" {
 		users.Password = hashAndSalt([]byte(users.Password))
 	} else {
-		var tempUsers Users
+		var tempUsers User
 		uc.connection.Find(&tempUsers, users.ID)
 		users.Password = tempUsers.Password
 	}
@@ -52,7 +52,7 @@ func (uc userConnection) UpdateUser(users Users) Users {
 }
 
 func (uc userConnection) VerifyCredential(email string, password string) interface{} {
-	var users Users
+	var users User
 	res := uc.connection.Where("email=?", email).Take(&users)
 	if res.Error == nil {
 		return users
@@ -61,30 +61,30 @@ func (uc userConnection) VerifyCredential(email string, password string) interfa
 }
 
 func (uc userConnection) IsDuplicateEmail(email string) (ab *gorm.DB) {
-	var users Users
+	var users User
 	return uc.connection.Where("email = ?", email).Take(&users)
 }
 
-func (uc userConnection) FindByEmail(email string) Users {
-	var users Users
+func (uc userConnection) FindByEmail(email string) User {
+	var users User
 	uc.connection.Where("email=?", email).Take(&users)
 	return users
 }
 
-func (uc userConnection) GetUser(users Users) Users {
-	//var users Users
-	uc.connection.Preload("Users").Find(&users)
+func (uc userConnection) GetUser(users User) User {
+	//var users User
+	uc.connection.Preload("User").Find(&users)
 	return users
 }
 
-func (uc userConnection) DeleteUser(users Users) Users {
+func (uc userConnection) DeleteUser(users User) User {
 	uc.connection.Delete(&users)
 	return users
 }
 
-func (uc userConnection) ProfileUser(userId string) Users {
-	var users Users
-	uc.connection.Preload("Photos").Preload("Photos.User").Find("&users, userId")
+func (uc userConnection) ProfileUser(userId string) User {
+	var users User
+	uc.connection.Preload("Photo").Preload("Photo.User").Find("&users, userId")
 	return users
 }
 

@@ -11,8 +11,8 @@ import (
 
 type AuthHelperInterface interface {
 	VerifyCredential(email string, password string) interface{}
-	CreateUser(user app.Register) models.Users
-	FindByEmail(email string) models.Users
+	CreateUser(user app.Register) models.User
+	FindByEmail(email string) models.User
 	IsDuplicateEmail(email string) bool
 }
 
@@ -22,7 +22,7 @@ type AuthHelperStruct struct {
 
 func (authHelperStruct *AuthHelperStruct) VerifyCredential(email string, password string) interface{} {
 	res := authHelperStruct.userRepo.VerifyCredential(email, password)
-	if value, ok := res.(models.Users); ok {
+	if value, ok := res.(models.User); ok {
 		comparedPassword := comparedPassword(value.Password, []byte(password))
 		if value.Email == email && comparedPassword {
 			return res
@@ -42,8 +42,8 @@ func comparedPassword(password string, bytes []byte) bool {
 	return false
 }
 
-func (authHelperStruct AuthHelperStruct) CreateUser(user app.Register) models.Users {
-	userCreate := models.Users{}
+func (authHelperStruct AuthHelperStruct) CreateUser(user app.Register) models.User {
+	userCreate := models.User{}
 	err := smapping.FillStruct(&userCreate, smapping.MapFields(&user))
 	if err != nil {
 		log.Fatalf("Failed to map #{err}")
@@ -52,7 +52,7 @@ func (authHelperStruct AuthHelperStruct) CreateUser(user app.Register) models.Us
 	return res
 }
 
-func (authHelperStruct AuthHelperStruct) FindByEmail(email string) models.Users {
+func (authHelperStruct AuthHelperStruct) FindByEmail(email string) models.User {
 	return authHelperStruct.userRepo.FindByEmail(email)
 }
 

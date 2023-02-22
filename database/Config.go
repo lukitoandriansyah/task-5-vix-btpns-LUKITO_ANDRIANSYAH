@@ -13,7 +13,7 @@ import (
 		panic("failed to connect to database")
 	}
 
-	db.AutoMigrate(models.Users{}, models.Photos{})
+	db.AutoMigrate(models.User{}, models.Photo{})
 	return db
 }
 */
@@ -33,10 +33,7 @@ func Connection() *gorm.DB {
 	if err != nil {
 		panic("Failed to connecting database")
 	}
-	err = db.AutoMigrate(&models.Users{}, &models.Photos{})
-	if err != nil {
-		return nil
-	}
+	err = db.AutoMigrate(&models.User{}, &models.Photo{})
 	return db
 }
 func CloseDatabaseConnection(db *gorm.DB) {
@@ -45,7 +42,4 @@ func CloseDatabaseConnection(db *gorm.DB) {
 		panic("Failed to disconnecting db")
 	}
 	err = dataSQL.Close()
-	if err != nil {
-		return
-	}
 }

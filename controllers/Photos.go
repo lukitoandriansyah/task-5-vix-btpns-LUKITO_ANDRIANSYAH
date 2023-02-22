@@ -14,7 +14,7 @@ import (
 /*
 func (idb *InDB) GetUser(c *gin.Context) {
 	var (
-		users  models.Users
+		users  models.User
 		result gin.H
 	)
 }*/
@@ -40,7 +40,7 @@ func (ps *PhotosStruct) GetById(ctx *gin.Context) {
 	}
 
 	var photos = ps.photosHelperInterface.GetById(uint(id))
-	if (photos == models.Photos{}) {
+	if (photos == models.Photo{}) {
 		res := helpers.BuildErrorResponse("Data was not found", "There's not data for these id", helpers.EmptyObjStruct{})
 		ctx.JSON(http.StatusNotFound, res)
 	} else {
@@ -99,7 +99,7 @@ func (ps *PhotosStruct) Update(ctx *gin.Context) {
 }
 
 func (ps *PhotosStruct) Delete(ctx *gin.Context) {
-	var photos models.Photos
+	var photos models.Photo
 	id, err := strconv.ParseUint(ctx.Param("id"), 0, 0)
 	if err != nil {
 		res := helpers.BuildErrorResponse("Failed to get id", "parameter id was not exist", helpers.EmptyObjStruct{})
