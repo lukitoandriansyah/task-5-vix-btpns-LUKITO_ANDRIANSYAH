@@ -11,14 +11,6 @@ import (
 	"task-5-vix-btpns-LUKITO_ANDRIANSYAH/models"
 )
 
-/*
-func (idb *InDB) GetUser(c *gin.Context) {
-	var (
-		users  models.User
-		result gin.H
-	)
-}*/
-
 type PhotosInterface interface {
 	GetById(ctx *gin.Context)
 	Insert(ctx *gin.Context)
