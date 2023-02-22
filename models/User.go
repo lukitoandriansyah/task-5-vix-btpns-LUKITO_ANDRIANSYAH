@@ -54,7 +54,7 @@ func (uc userConnection) UpdateUser(users User) User {
 func (uc userConnection) VerifyCredential(email string, password string) interface{} {
 	var users User
 	res := uc.connection.Where("email=?", email).Take(&users)
-	if res.Error == nil {
+	if res.Error != nil {
 		return users
 	}
 	return nil

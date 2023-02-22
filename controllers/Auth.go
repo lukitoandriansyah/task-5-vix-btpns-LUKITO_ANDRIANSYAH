@@ -44,7 +44,6 @@ func (as AuthStruct) Register(ctx *gin.Context) {
 	if err != nil {
 		res := helpers.BuildErrorResponse("Failed to process request data", err.Error(), helpers.EmptyObjStruct{})
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
-		return
 	}
 
 	if !as.authHelperInterface.IsDuplicateEmail(register.Email) {
