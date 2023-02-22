@@ -13,7 +13,7 @@ type JwtHelperInterface interface {
 }
 
 type JwtHelperCustomStruct struct {
-	userId string `json:"userId"`
+	UserId string `json:"userId"`
 	jwt.StandardClaims
 }
 
@@ -41,7 +41,7 @@ func (jwtHelperStruct JwtHelperStruct) GenerateToken(userId string) string {
 func (jwtHelperStruct JwtHelperStruct) ValidateToken(token string) (*jwt.Token, error) {
 	return jwt.Parse(token, func(token_ *jwt.Token) (interface{}, error) {
 		if _, ok := token_.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("Unexpexted signing method %v", token_.Header["alg"])
+			return nil, fmt.Errorf("unexpexted signing method %v", token_.Header["alg"])
 		}
 		return []byte(jwtHelperStruct.secretKey), nil
 	})

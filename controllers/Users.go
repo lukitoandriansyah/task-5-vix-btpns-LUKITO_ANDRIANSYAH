@@ -39,6 +39,7 @@ func (us *UsersStruct) Update(ctx *gin.Context) {
 		panic(err.Error())
 	}
 	uud.ID = uint(id)
+	//goland:noinspection GoVetCopyLock
 	updated := us.usersHelperInterface.Update(uud)
 	res := helpers.BuildResponse(true, "OK!", updated)
 	ctx.JSON(http.StatusOK, res)

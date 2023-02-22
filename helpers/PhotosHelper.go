@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/mashingan/smapping"
 	"log"
+	"strconv"
 	"task-5-vix-btpns-LUKITO_ANDRIANSYAH/database"
 	"task-5-vix-btpns-LUKITO_ANDRIANSYAH/models"
 )
@@ -50,7 +51,7 @@ func (phs *PhotosHelperStruct) GetById(photodId uint) models.Photos {
 
 func (phs *PhotosHelperStruct) IsAllowedToEdit(usersId string, PhotosId uint) bool {
 	pid := phs.photosRepo.GetPhotoById(PhotosId)
-	id := fmt.Sprintf(string(pid.UserId))
+	id := fmt.Sprintf(strconv.Itoa(int(pid.UserId)))
 	return usersId == id
 }
 

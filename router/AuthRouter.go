@@ -2,22 +2,29 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"task-5-vix-btpns-LUKITO_ANDRIANSYAH/controllers"
 	"task-5-vix-btpns-LUKITO_ANDRIANSYAH/database"
 	"task-5-vix-btpns-LUKITO_ANDRIANSYAH/helpers"
 	"task-5-vix-btpns-LUKITO_ANDRIANSYAH/models"
 )
 
+/*
 var (
-	db                  *gorm.DB                    = database.DataBaseConnection()
-	usersRepo           models.UsersRepo            = models.NewUsersRepo(db)
-	authHelperInterface helpers.AuthHelperInterface = helpers.NewAuthHelper(usersRepo)
-	jwtHelperInterface  helpers.JwtHelperInterface  = helpers.NewJwtHelperInterface()
-	authInterface       controllers.AuthInterface   = controllers.NewAuthInterface(authHelperInterface, jwtHelperInterface)
-)
 
+	db                  = database.Connection()
+	usersRepo           = models.NewUsersRepo(database.Connection())
+	authHelperInterface = helpers.NewAuthHelper(usersRepo)
+	jwtHelperInterface  = helpers.NewJwtHelperInterface()
+	authInterface       = controllers.NewAuthInterface(authHelperInterface, jwtHelperInterface)
+
+)
+*/
 func AuthRouter() {
+	var db = database.Connection()
+	var usersRepo = models.NewUsersRepo(db)
+	var authHelperInterface = helpers.NewAuthHelper(usersRepo)
+	var jwtHelperInterface = helpers.NewJwtHelperInterface()
+	var authInterface = controllers.NewAuthInterface(authHelperInterface, jwtHelperInterface)
 	router := gin.Default()
 	authRoutes := router.Group("api/users")
 	{
