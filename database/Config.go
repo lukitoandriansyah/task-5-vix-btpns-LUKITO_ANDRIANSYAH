@@ -38,3 +38,10 @@ func DataBaseConnection() *gorm.DB {
 	db.AutoMigrate(&models.Users{}, &models.Photos{})
 	return db
 }
+func CloseDatabaseConnection(db *gorm.DB) {
+	dataSQL, err := db.DB()
+	if err != nil {
+		panic("Failed to disconnecting db")
+	}
+	dataSQL.Close()
+}
