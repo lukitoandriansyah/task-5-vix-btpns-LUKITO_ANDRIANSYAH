@@ -45,7 +45,16 @@ func (us *UsersStruct) Update(ctx *gin.Context) {
 }
 
 func (us *UsersStruct) Profile(ctx *gin.Context) {
-
+	authHeader := ctx.GetHeader("Authorization")
+	tokenVal, errToken := us.jwtHelperInterface.ValidateToken(authHeader)
+	if errToken != nil {
+		panic(errToken.Error())
+	}
+	claims := tokenVal.Claims.(jwt.MapClaims)
+	id := fmt.Sprintf("%v", claims["userId"])
+	user := us.usersHelperInterface.Profile(id)
+	res := helpers.BuildResponse(true, "Ok!", user)
+	ctx.JSON(http.StatusOK, res)
 }
 
 func NewUsersInterface(usersHelperInterfaceNew helpers.UsersHelperInterface, jwtHelperInterfaceNew helpers.JwtHelperInterface) UsersInterface {
