@@ -13,7 +13,7 @@ type PhotosHelperInterface interface {
 	Insert(photoDb database.PhotoCreateData) models.Photo
 	Update(photoDb database.PhotosUpdateData) models.Photo
 	Delete(photoDb models.Photo)
-	GetById(photodId uint) models.Photo
+	GetById(photoId uint) models.Photo
 	IsAllowedToEdit(usersId string, PhotosId uint) bool
 }
 
@@ -45,8 +45,8 @@ func (phs *PhotosHelperStruct) Delete(photoDb models.Photo) {
 	phs.photosRepo.DeletePhoto(photoDb)
 }
 
-func (phs *PhotosHelperStruct) GetById(photodId uint) models.Photo {
-	return phs.photosRepo.GetPhotoById(photodId)
+func (phs *PhotosHelperStruct) GetById(photoId uint) models.Photo {
+	return phs.photosRepo.GetPhotoById(photoId)
 }
 
 func (phs *PhotosHelperStruct) IsAllowedToEdit(usersId string, PhotosId uint) bool {

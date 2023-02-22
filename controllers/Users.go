@@ -24,7 +24,7 @@ func (us *UsersStruct) Update(ctx *gin.Context) {
 	var uud database.UsersUpdateData
 	errData := ctx.ShouldBind(&uud)
 	if errData != nil {
-		res := helpers.BuildErrorResponse("Failed to process data", errData.Error(), helpers.EmptyObjStruct{})
+		res := helpers.BuildErrorResponse("Failed to process request data", errData.Error(), helpers.EmptyObjStruct{})
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
 		return
 	}
@@ -54,7 +54,7 @@ func (us *UsersStruct) Profile(ctx *gin.Context) {
 	claims := tokenVal.Claims.(jwt.MapClaims)
 	id := fmt.Sprintf("%v", claims["userId"])
 	user := us.usersHelperInterface.Profile(id)
-	res := helpers.BuildResponse(true, "Ok!", user)
+	res := helpers.BuildResponse(true, "OK!", user)
 	ctx.JSON(http.StatusOK, res)
 }
 

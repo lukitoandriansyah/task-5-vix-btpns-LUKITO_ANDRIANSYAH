@@ -23,11 +23,11 @@ func BuildResponse(status bool, message string, data interface{}) ResponseDataSt
 }
 
 func BuildErrorResponse(message string, err string, data interface{}) ResponseDataStruct {
-	splitedErr := strings.Split(err, "\n")
+	splitErr := strings.Split(err, "\n")
 	res := ResponseDataStruct{
 		Status:  false,
 		Message: message,
-		Error:   splitedErr,
+		Error:   splitErr,
 		Data:    data,
 	}
 	return res

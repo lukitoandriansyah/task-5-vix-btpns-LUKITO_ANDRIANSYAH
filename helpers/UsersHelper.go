@@ -20,7 +20,7 @@ func (uhs *UsersHelperStruct) Update(users database.UsersUpdateData) models.User
 	userUpdate := models.User{}
 	err := smapping.FillStruct(&userUpdate, smapping.MapFields(&users))
 	if err != nil {
-		log.Fatalf("Failed to mapp #{err}")
+		log.Fatalf("Failed to map #{err}")
 	}
 	updatedUser := uhs.usersRepo.UpdateUser(userUpdate)
 	return updatedUser

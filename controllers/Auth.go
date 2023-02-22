@@ -23,7 +23,7 @@ func (as AuthStruct) Login(ctx *gin.Context) {
 	var login app.Login
 	err := ctx.ShouldBind(&login)
 	if err != nil {
-		res := helpers.BuildErrorResponse("Failed to Process data", err.Error(), helpers.EmptyObjStruct{})
+		res := helpers.BuildErrorResponse("Failed to process request data", err.Error(), helpers.EmptyObjStruct{})
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
 		return
 	}
@@ -31,7 +31,7 @@ func (as AuthStruct) Login(ctx *gin.Context) {
 	if value, ok := authFix.(models.User); ok {
 		generatedToken := as.jwtHelperInterface.GenerateToken(strconv.FormatUint(uint64(value.ID), 10))
 		value.Token = generatedToken
-		res := helpers.BuildResponse(true, "OK", value)
+		res := helpers.BuildResponse(true, "OK!", value)
 		ctx.JSON(http.StatusOK, res)
 		return
 
@@ -42,13 +42,13 @@ func (as AuthStruct) Register(ctx *gin.Context) {
 	var register app.Register
 	err := ctx.ShouldBind(&register)
 	if err != nil {
-		res := helpers.BuildErrorResponse("Failed dto process data", err.Error(), helpers.EmptyObjStruct{})
+		res := helpers.BuildErrorResponse("Failed to process request data", err.Error(), helpers.EmptyObjStruct{})
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, res)
 		return
 	}
 
 	if !as.authHelperInterface.IsDuplicateEmail(register.Email) {
-		res := helpers.BuildErrorResponse("failed to process data", err.Error(), helpers.EmptyObjStruct{})
+		res := helpers.BuildErrorResponse("Failed to process request data", err.Error(), helpers.EmptyObjStruct{})
 		ctx.JSON(http.StatusConflict, res)
 	} else {
 		createUser := as.authHelperInterface.CreateUser(register)

@@ -12,7 +12,7 @@ func JwtAuth(jwtHelperInterface helpers.JwtHelperInterface) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		authHeader := context.GetHeader("Authorization")
 		if authHeader == "" {
-			res := helpers.BuildErrorResponse("Sorry, failed to process data", "Roken not found", nil)
+			res := helpers.BuildErrorResponse("Sorry, failed to process data", "Token not found", nil)
 			context.AbortWithStatusJSON(http.StatusUnauthorized, res)
 			return
 		}
