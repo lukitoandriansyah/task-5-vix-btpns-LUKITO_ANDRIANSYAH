@@ -8,12 +8,12 @@ import (
 )
 
 type Users struct {
-	ID        uint     `gorm:"primaryKey:autoIncrement" json:"id"`
-	Username  string   `gorm:"type:varchar(255)" json:"username"`
-	Email     string   `gorm:"uniqueIndex; type:varchar(255)" json:"email"`
-	Password  string   `gorm:"->'<-; not null" validate:"min=6" json:"."`
-	Token     string   `gorm:"-" json:"token,omitempty"`
-	Photos    []Photos `gorm:"embedded" json:"photos,omitempty"`
+	ID        uint      `gorm:"primaryKey:autoIncrement" json:"id"`
+	Username  string    `gorm:"type:varchar(255)" json:"username"`
+	Email     string    `gorm:"uniqueIndex; type:varchar(255)" json:"email"`
+	Password  string    `gorm:"->'<-; not null" validate:"min=6" json:"."`
+	Token     string    `gorm:"-" json:"token,omitempty"`
+	Photos    *[]Photos `gorm:"embedded" json:"photos,omitempty"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
