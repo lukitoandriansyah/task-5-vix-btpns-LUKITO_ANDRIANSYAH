@@ -61,7 +61,7 @@ func (authHelperStruct AuthHelperStruct) IsDuplicateEmail(email string) bool {
 	return !(res.Error == nil)
 }
 
-func newAuthHelper(userApp models.UsersRepo) AuthHelperInterface {
+func NewAuthHelper(userApp models.UsersRepo) AuthHelperInterface {
 	return &AuthHelperStruct{
 		userRepo: userApp,
 	}

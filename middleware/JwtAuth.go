@@ -8,7 +8,7 @@ import (
 	"task-5-vix-btpns-LUKITO_ANDRIANSYAH/helpers"
 )
 
-func JwtAuth(jwtHelperStruct helpers.JwtHelperStruct) gin.HandlerFunc {
+func JwtAuth(jwtHelperInterface helpers.JwtHelperInterface) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		authHeader := context.GetHeader("Authorization")
 		if authHeader == "" {
@@ -16,7 +16,7 @@ func JwtAuth(jwtHelperStruct helpers.JwtHelperStruct) gin.HandlerFunc {
 			context.AbortWithStatusJSON(http.StatusUnauthorized, res)
 			return
 		}
-		token, err := jwtHelperStruct.ValidateToken(authHeader)
+		token, err := jwtHelperInterface.ValidateToken(authHeader)
 		if token.Valid {
 			claims := token.Claims.(jwt.MapClaims)
 			log.Println("Claim[userId]: ", claims["userId"])
