@@ -84,7 +84,8 @@ func (uc userConnection) DeleteUser(users User) User {
 
 func (uc userConnection) ProfileUser(userId string) User {
 	var users User
-	uc.connection.Preload("Photo").Preload("Photo.User").Find("&users, userId")
+	/*	uc.connection.Preload("Photo").Preload("Photo.User").Find("&users, userId")*/
+	uc.connection.Preload("Photo").Preload("Photo.User").Find(&users, userId)
 	return users
 }
 
