@@ -19,7 +19,7 @@ type AuthStruct struct {
 	jwtHelperInterface  helpers.JwtHelperInterface
 }
 
-func (as AuthStruct) Login(ctx *gin.Context) {
+func (as *AuthStruct) Login(ctx *gin.Context) {
 	var login app.Login
 	err := ctx.ShouldBind(&login)
 	if err != nil {
@@ -38,7 +38,7 @@ func (as AuthStruct) Login(ctx *gin.Context) {
 	}
 }
 
-func (as AuthStruct) Register(ctx *gin.Context) {
+func (as *AuthStruct) Register(ctx *gin.Context) {
 	var register app.Register
 	err := ctx.ShouldBind(&register)
 	if err != nil {
