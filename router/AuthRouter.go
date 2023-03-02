@@ -8,17 +8,6 @@ import (
 	"task-5-vix-btpns-LUKITO_ANDRIANSYAH/models"
 )
 
-/*
-var (
-
-	db                  = database.Connection()
-	usersRepo           = models.NewUsersRepo(database.Connection())
-	authHelperInterface = helpers.NewAuthHelper(usersRepo)
-	jwtHelperInterface  = helpers.NewJwtHelperInterface()
-	authInterface       = controllers.NewAuthInterface(authHelperInterface, jwtHelperInterface)
-
-)
-*/
 func AuthRouter() {
 	var db = database.Connection()
 	var usersRepo = models.NewUsersRepo(db)
