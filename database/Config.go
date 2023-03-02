@@ -6,21 +6,8 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
-
-	//"os"
 	"task-5-vix-btpns-LUKITO_ANDRIANSYAH/models"
 )
-
-/*func DBinit() *gorm.DB {
-	db, err := gorm.Open("mysql", "root:wj3oYiTnE1uySOd2r0$K^@tcp(127.0.0.1:3306)/photousers?charset=utf8&parseTime=True")
-	if err != nil {
-		panic("failed to connect to database")
-	}
-
-	db.AutoMigrate(models.User{}, models.Photo{})
-	return db
-}
-*/
 
 func Connection() *gorm.DB {
 	if godotenv.Load() != nil {
