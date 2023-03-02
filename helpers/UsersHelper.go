@@ -16,7 +16,7 @@ type UsersHelperStruct struct {
 	usersRepo models.UsersRepo
 }
 
-func (uhs *UsersHelperStruct) Update(users database.UsersUpdateData) models.User {
+func (uhs *UsersHelperStruct) Update(users *database.UsersUpdateData) models.User {
 	userUpdate := models.User{}
 	err := smapping.FillStruct(&userUpdate, smapping.MapFields(&users))
 	if err != nil {
@@ -30,7 +30,7 @@ func (uhs *UsersHelperStruct) Profile(userId string) models.User {
 	return uhs.usersRepo.ProfileUser(userId)
 }
 
-func NewUsersHelperInterface(usersHelperNew models.UsersRepo) UsersHelperInterface {
+func NewUsersHelperInterface(usersHelperNew models.UsersRepo) *UsersHelperStruct {
 	return &UsersHelperStruct{
 		usersRepo: usersHelperNew,
 	}
