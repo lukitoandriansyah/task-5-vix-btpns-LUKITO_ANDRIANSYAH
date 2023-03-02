@@ -9,8 +9,6 @@ import (
 	"task-5-vix-btpns-LUKITO_ANDRIANSYAH/models"
 )
 
-var ()
-
 func UsersRouter() {
 	var db = database.Connection()
 	var usersRepo = models.NewUsersRepo(db)
